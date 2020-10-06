@@ -3,8 +3,8 @@ use bevy::prelude::*;
 use crate::game::prelude::{Direction, *};
 
 pub fn setup_system(mut commands: Commands,
-         mut materials: ResMut<Assets<ColorMaterial>>,
-         asset_server: Res<AssetServer>) {
+                    mut materials: ResMut<Assets<ColorMaterial>>,
+                    asset_server: Res<AssetServer>) {
     commands
         .spawn(Camera2dComponents::default())
         .spawn(UiCameraComponents::default())

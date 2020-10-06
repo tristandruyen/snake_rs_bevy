@@ -1,7 +1,4 @@
-use bevy::{
-    prelude::*,
-    sprite::collide_aabb::{collide},
-};
+use bevy::{prelude::*, sprite::collide_aabb::collide};
 
 use rand::Rng;
 
