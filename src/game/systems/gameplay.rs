@@ -6,12 +6,9 @@ use bevy::{
     sprite::collide_aabb::{collide, Collision},
 };
 
-
 use rand::Rng;
 
-
-
-use crate::{game::*};
+use crate::game::*;
 
 pub fn bump_snake_tail_system(mut _commands: Commands,
 

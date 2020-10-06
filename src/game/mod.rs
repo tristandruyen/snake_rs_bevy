@@ -12,67 +12,13 @@ use bevy::{
 
 use bevy::window::WindowMode;
 
-
 use crate::plugins::*;
 
-mod snake;
-
+mod prelude;
+use prelude::{Direction, *};
 
 mod systems;
-use systems::prelude::*;
-
-#[derive(Clone, Copy, Debug, PartialEq)]
-enum Direction {
-    Up,
-    Down,
-    Left,
-    Right,
-}
-
-pub struct Snake {
-    speed:     f32,
-    direction: Direction,
-}
-
-pub struct SnakeTail {
-    next_elem: Entity,
-    direction: Direction,
-}
-
-pub struct MyAssets {
-    fruit_color: Handle<ColorMaterial>,
-    snake_color: Handle<ColorMaterial>,
-    tail_color:  Handle<ColorMaterial>,
-    debug_color: Handle<ColorMaterial>,
-}
-
-pub enum PowerUp {
-    SpeedUp,
-}
-
-pub struct Fruit {
-    powerup: Option<PowerUp>,
-}
-
-pub struct Scoreboard {
-    score: usize,
-}
-
-impl Direction {
-    fn to_vec3(&self) -> Vec3 {
-        match self {
-            Direction::Up => Vec3::new(0.0, 1.0, 0.0),
-            Direction::Down => Vec3::new(0.0, -1.0, 0.0),
-            Direction::Left => Vec3::new(-1.0, 0.0, 0.0),
-            Direction::Right => Vec3::new(1.0, 0.0, 0.0),
-        }
-    }
-}
-// struct SnakeHead {}
-
-pub struct Bumper {
-    direction: Direction,
-}
+use systems::{*, ui::scoreboard_system};
 
 pub fn run() {
     App::build()
@@ -102,11 +48,6 @@ pub fn run() {
                 .run();
 }
 
-fn scoreboard_system(scoreboard: Res<Scoreboard>, mut query: Query<&mut Text>) {
-    for mut text in &mut query.iter() {
-        text.value = format!("Score: {}", scoreboard.score);
-    }
-}
 fn setup(mut commands: Commands,
          mut materials: ResMut<Assets<ColorMaterial>>,
          asset_server: Res<AssetServer>) {
