@@ -24,7 +24,7 @@ fn main() {
         2 => LevelFilter::Warn,
         3 => LevelFilter::Info,
         4 => LevelFilter::Debug,
-        5 | _ => LevelFilter::Trace,
+        _ => LevelFilter::Trace,
     };
 
     // Initialize logging
@@ -38,19 +38,18 @@ fn main() {
 fn initialize_logging(our_level_filter: LevelFilter) {
     use chrono::Utc;
 
-    fern::Dispatch::new()
-        .level(LevelFilter::Error)
-        .level_for("rust_game_engine", our_level_filter)
-        .chain(std::io::stderr())
-        .format(|out, message, record| {
-            out.finish(format_args!(
-                "{} | {} | {} | {}",
-                Utc::now().format("%Y-%m-%d %H:%M:%S%.3f"),
-                record.target(),
-                record.level(),
-                message
-            ))
-        })
-        .apply()
-        .unwrap();
+    fern::Dispatch::new().level(LevelFilter::Error)
+                         .level_for("rust_game_engine", our_level_filter)
+                         .chain(std::io::stderr())
+                         .format(|out, message, record| {
+                             out.finish(format_args!(
+            "{} | {} | {} | {}",
+            Utc::now().format("%Y-%m-%d %H:%M:%S%.3f"),
+            record.target(),
+            record.level(),
+            message
+        ))
+                         })
+                         .apply()
+                         .unwrap();
 }

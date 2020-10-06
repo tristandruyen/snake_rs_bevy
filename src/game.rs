@@ -106,10 +106,10 @@ fn change_direction_for_parts_system(mut snake_query: Query<(Entity,
                                             &SnakeTail,
                                             &Transform,
                                             &Sprite)>) {
-    for (snake_tail_entity,
-         snake_tail,
-         snake_tail_transform,
-         snake_tail_sprite) in &mut snake_query.iter()
+    for (_snake_tail_entity,
+         _snake_tail,
+         _snake_tail_transform,
+         _snake_tail_sprite) in &mut snake_query.iter()
     {}
 }
 
@@ -132,11 +132,11 @@ fn direction_input_system(mut commands: Commands,
 
                     commands.spawn(SpriteComponents {
                         material: my_assets.debug_color,
-                        transform: transform.clone(),
+                        transform: *transform,
                         sprite: Sprite::new(Vec2::new(10.0, 10.0)),
                         ..Default::default()
                     })
-                    .with(Bumper{ direction: direction});
+                    .with(Bumper{ direction});
                 }
             }
         }
@@ -169,7 +169,7 @@ fn bump_snake_tail_system(mut _commands: Commands,
                                     bumper_size,
                                     snake_tail_transform.translation(),
                                     snake_tail_sprite.size);
-            if let Some(_) = collision {
+            if collision.is_some() {
                 snake_tail.direction = bumper.direction;
                 // println!("asd")
             }
@@ -201,13 +201,13 @@ fn eat_fruit_system(mut commands: Commands,
                                     fruit_transform.translation(),
                                     fruit_sprite.size);
 
-            if let Some(_) = collision {
+            if collision.is_some() {
                 commands.despawn(fruit_entity);
                 scoreboard.score += 1;
 
                 // spawn new snake tail
 
-                let mut part_transform = snake_transform.clone();
+                let mut part_transform = *snake_transform;
                 part_transform.translate(snake.direction.to_vec3()
                                          * Vec3::new(-snake_size.x(),
                                                      -snake_size.y(),
