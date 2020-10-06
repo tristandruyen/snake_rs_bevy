@@ -1,5 +1,5 @@
 // #![allow(unused_imports)]
-#![allow(unused_parens)]
+// #![allow(unused_parens)]
 #![allow(dead_code)]
 
 use bevy::{
@@ -11,12 +11,12 @@ use bevy::{
 };
 
 use bevy::window::WindowMode;
-use rand::Rng;
+
 
 use crate::plugins::*;
 
 mod snake;
-use snake::*;
+
 
 mod systems;
 use systems::prelude::*;

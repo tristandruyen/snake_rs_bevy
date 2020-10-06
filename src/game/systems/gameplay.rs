@@ -6,12 +6,12 @@ use bevy::{
     sprite::collide_aabb::{collide, Collision},
 };
 
-use bevy::window::WindowMode;
+
 use rand::Rng;
 
-use crate::game::{snake::*, systems::input::*};
 
-use crate::{game::*, plugins::*};
+
+use crate::{game::*};
 
 pub fn bump_snake_tail_system(mut _commands: Commands,
 
