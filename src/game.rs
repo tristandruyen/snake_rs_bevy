@@ -4,13 +4,15 @@
 
 use bevy::{
     asset::HandleId,
-    diagnostic::{FrameTimeDiagnosticsPlugin, PrintDiagnosticsPlugin},
+    diagnostic::FrameTimeDiagnosticsPlugin,
     prelude::*,
     render::pass::ClearColor,
     sprite::collide_aabb::{collide, Collision},
 };
 
 use bevy::window::WindowMode;
+
+use super::plugins::*;
 
 use rand::Rng;
 
@@ -84,7 +86,7 @@ pub fn run() {
         .add_default_plugins()
 
         .add_plugin(FrameTimeDiagnosticsPlugin::default())
-        .add_plugin(PrintDiagnosticsPlugin::default())
+        .add_plugin(DebugDiagnosticsPlugin::default())
                 .add_resource(Scoreboard { score: 0 })
                 .add_resource(ClearColor(Color::rgb(1.0, 1.0, 1.0)))
                 .add_startup_system(setup.system())
