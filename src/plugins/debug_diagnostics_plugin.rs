@@ -1,3 +1,4 @@
+#![allow(dead_code)]
 use bevy::{
     app::prelude::*,
     core::{Time, Timer},
