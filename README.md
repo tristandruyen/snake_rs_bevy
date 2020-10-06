@@ -14,3 +14,6 @@ if you dare
 ```bash
 cargo run -- -vvvvvvvvv # Add as many v's as you feel you can handle :P
 ```
+
+
+- `-vvv` will get you FPS+frame time stats
