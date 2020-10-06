@@ -1,0 +1,18 @@
+max_width = 80
+tab_spaces = 4
+use_field_init_shorthand = true
+
+
+# unstable
+unstable_features = true
+merge_imports = true
+struct_field_align_threshold = 4
+imports_layout = "HorizontalVertical"
+overflow_delimited_expr = true
+trailing_comma = "Vertical"
+brace_style = "PreferSameLine"
+use_try_shorthand = true
+fn_single_line = true
+indent_style = "Visual"
+merge_derives = true
+# wrap_comments = true
