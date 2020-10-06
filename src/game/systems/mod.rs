@@ -1,10 +1,11 @@
-pub mod prelude;
-
 mod input;
 pub use input::*;
 
 mod gameplay;
 pub use gameplay::*;
 
-pub mod ui;
+mod ui;
 pub use ui::*;
+
+mod setup;
+pub use setup::*;

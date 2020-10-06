@@ -1,9 +1,5 @@
 use bevy::{
-    asset::HandleId,
-    diagnostic::FrameTimeDiagnosticsPlugin,
     prelude::*,
-    render::pass::ClearColor,
-    sprite::collide_aabb::{collide, Collision},
 };
 
 pub struct Snake {

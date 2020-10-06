@@ -1,10 +1,4 @@
-use bevy::{
-    asset::HandleId,
-    diagnostic::FrameTimeDiagnosticsPlugin,
-    prelude::*,
-    render::pass::ClearColor,
-    sprite::collide_aabb::{collide, Collision},
-};
+use bevy::prelude::*;
 
 use crate::game::prelude::*;
 

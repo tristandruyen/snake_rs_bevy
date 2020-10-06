@@ -1,9 +1,6 @@
 use bevy::{
-    asset::HandleId,
-    diagnostic::FrameTimeDiagnosticsPlugin,
     prelude::*,
-    render::pass::ClearColor,
-    sprite::collide_aabb::{collide, Collision},
+    sprite::collide_aabb::{collide},
 };
 
 use rand::Rng;
