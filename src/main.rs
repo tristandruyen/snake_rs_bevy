@@ -16,7 +16,6 @@ struct Opt {
 
 fn main() {
     let opt = Opt::from_args();
-    println!("{:?}", opt);
 
     // Vary the output based on how many times the user used the "verbose" flag
     // (i.e. 'myprog -v -v -v' or 'myprog -vvv' vs 'myprog -v'
@@ -33,6 +32,7 @@ fn main() {
     initialize_logging(log_level);
 
     debug!("Debug logging enabled.");
+    debug!("{:?}", opt);
 
     game::run();
 }
