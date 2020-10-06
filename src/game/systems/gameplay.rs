@@ -2,7 +2,7 @@ use bevy::{prelude::*, sprite::collide_aabb::collide};
 
 use rand::Rng;
 
-use crate::game::*;
+use crate::game::{components::*, *};
 
 pub fn bump_snake_tail_system(mut _commands: Commands,
 

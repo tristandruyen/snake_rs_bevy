@@ -1,36 +1,12 @@
 use bevy::prelude::*;
-
-pub struct Snake {
-    pub speed:     f32,
-    pub direction: Direction,
-}
-
-pub struct SnakeTail {
-    pub next_elem: Entity,
-    pub direction: Direction,
-}
-
 pub struct MyAssets {
     pub fruit_color: Handle<ColorMaterial>,
     pub snake_color: Handle<ColorMaterial>,
     pub tail_color:  Handle<ColorMaterial>,
     pub debug_color: Handle<ColorMaterial>,
 }
-
-pub enum PowerUp {
-    SpeedUp,
-}
-
-pub struct Fruit {
-    pub powerup: Option<PowerUp>,
-}
-
 pub struct Scoreboard {
     pub score: usize,
-}
-
-pub struct Bumper {
-    pub direction: Direction,
 }
 
 #[derive(Clone, Copy, Debug, PartialEq)]

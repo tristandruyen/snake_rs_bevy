@@ -15,6 +15,8 @@ use prelude::{Direction, *};
 
 mod systems;
 use systems::*;
+mod components;
+use components::*;
 
 pub fn run() {
     App::build()
