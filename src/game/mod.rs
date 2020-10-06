@@ -11,12 +11,15 @@ use bevy::window::WindowMode;
 use crate::plugins::*;
 
 mod prelude;
-use prelude::{Direction, *};
 
 mod systems;
 use systems::*;
+
 mod components;
 use components::*;
+
+mod ressources;
+use ressources::*;
 
 pub fn run() {
     App::build()

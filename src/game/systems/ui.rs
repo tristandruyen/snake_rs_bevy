@@ -1,6 +1,6 @@
 use bevy::prelude::*;
 
-use crate::game::prelude::*;
+use crate::game::ressources::*;
 
 pub fn scoreboard_system(scoreboard: Res<Scoreboard>,
                          mut query: Query<&mut Text>) {

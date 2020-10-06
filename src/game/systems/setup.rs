@@ -1,9 +1,6 @@
 use bevy::prelude::*;
 
-use crate::game::{
-    components::*,
-    prelude::{Direction, *},
-};
+use crate::game::{components::*, prelude::Direction, ressources::*};
 
 pub fn setup_system(mut commands: Commands,
                     mut materials: ResMut<Assets<ColorMaterial>>,

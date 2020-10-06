@@ -1,6 +1,6 @@
 use bevy::prelude::*;
 
-use crate::game::{Bumper, Direction, MyAssets, Snake};
+use crate::game::{prelude::Direction, Bumper, MyAssets, Snake};
 
 pub fn direction_input_system(mut commands: Commands,
                               my_assets: Res<MyAssets>,
