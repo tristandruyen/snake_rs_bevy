@@ -67,7 +67,8 @@ pub fn setup_system(mut commands: Commands,
             sprite: Sprite::new(Vec2::new(15.0, 15.0)),
             ..Default::default()
         })
-            .with(Snake{speed: 400.0, direction: Direction::Right});
+            .with(Snake{speed: 400.0, direction: Direction::Right})
+            .with(Teleportable);
 
     // first fruit
     commands

@@ -1,6 +1,6 @@
 use bevy::{
     core::Time,
-    diagnostic::{Diagnostic, DiagnosticId, Diagnostics},
+    diagnostic::Diagnostics,
     ecs::{Res, ResMut},
     prelude::*,
 };
@@ -11,8 +11,6 @@ use crate::game::{
 };
 
 use crate::plugins::debug_diagnostics_plugin::DebugDiagnosticsState;
-
-use log::{debug, info};
 
 pub fn scoreboard_system(scoreboard: Res<Scoreboard>,
                          mut query: Query<(&mut Text, &ScoreText)>) {
@@ -37,10 +35,8 @@ pub fn fps_counter_system(mut state: ResMut<DebugDiagnosticsState>,
 
                 for (mut text, _) in &mut query.iter() {
                     text.value =
-                        format!("Fps: {:?}", diagnostic.average().unwrap());
+                        format!("Fps: {:?}", diagnostic.value().unwrap());
                 }
-
-                println!("\nasdf{:?}", diagnostic.average());
             }
         }
     }

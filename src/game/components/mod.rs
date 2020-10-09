@@ -23,5 +23,7 @@ pub struct Bumper {
     pub direction: Direction,
 }
 
+pub struct Teleportable;
+
 pub struct FpsText;
 pub struct ScoreText;
