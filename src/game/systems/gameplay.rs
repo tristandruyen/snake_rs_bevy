@@ -17,7 +17,7 @@ pub fn border_teleport_system(mut _commands: Commands,
             x if (x > width / 2) => {
                 transform.value_mut().w_axis_mut().set_x((x - width) as f32)
             }
-            x if ((x as i32) < -width / 2) => {
+            x if (x < -width / 2) => {
                 transform.value_mut().w_axis_mut().set_x((x + width) as f32)
             }
             _ => (),
@@ -32,8 +32,6 @@ pub fn border_teleport_system(mut _commands: Commands,
                                                .set_y((y + height) as f32),
             _ => (),
         }
-
-        println!("{:?}", pos)
     }
 }
 
