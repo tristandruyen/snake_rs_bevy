@@ -23,6 +23,6 @@ cargo run -- -vvvvvvvvv # Add as many v's as you feel you can handle :P
 
 #### Helpful Bevy Links
 
-[Bevy Cookbook](https://github.com/jamadazi/bevy-cookbook/blob/master/bevy-cookbook.md)
-[Bevy Cheatsheet](https://github.com/jamadazi/bevy-cheatsheet/blob/master/bevy-cheatsheet.md)
-[Awesome Bevy](https://github.com/bevyengine/awesome-bevy)
+- [Bevy Cookbook](https://github.com/jamadazi/bevy-cookbook/blob/master/bevy-cookbook.md)
+- [Bevy Cheatsheet](https://github.com/jamadazi/bevy-cheatsheet/blob/master/bevy-cheatsheet.md)
+- [Awesome Bevy](https://github.com/bevyengine/awesome-bevy)
