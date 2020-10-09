@@ -4,6 +4,39 @@ use rand::Rng;
 
 use crate::game::{components::*, ressources::*};
 
+pub fn border_teleport_system(mut _commands: Commands,
+                              window_descriptor: Res<WindowDescriptor>,
+                              mut query: Query<(&Teleportable,
+                                     &mut Transform)>) {
+    for (_, mut transform) in &mut query.iter() {
+        let width = window_descriptor.width as i32;
+        let height = window_descriptor.height as i32;
+        let pos: Vec4 = transform.value().w_axis();
+
+        match pos.x() as i32 {
+            x if (x > width / 2) => {
+                transform.value_mut().w_axis_mut().set_x((x - width) as f32)
+            }
+            x if ((x as i32) < -width / 2) => {
+                transform.value_mut().w_axis_mut().set_x((x + width) as f32)
+            }
+            _ => (),
+        }
+
+        match pos.y() as i32 {
+            y if (y > height / 2) => transform.value_mut()
+                                              .w_axis_mut()
+                                              .set_y((y - height) as f32),
+            y if (y < -height / 2) => transform.value_mut()
+                                               .w_axis_mut()
+                                               .set_y((y + height) as f32),
+            _ => (),
+        }
+
+        println!("{:?}", pos)
+    }
+}
+
 pub fn bump_snake_tail_system(mut _commands: Commands,
 
                               mut bumper_query: Query<(Entity,
@@ -107,7 +140,8 @@ pub fn eat_fruit_system(mut commands: Commands,
                         sprite: Sprite::new(Vec2::new(10.0, 10.0)),
                         ..Default::default()
                     })
-                    .with(SnakeTail{ next_elem: snake_ent, direction: snake.direction});
+                    .with(SnakeTail{ next_elem: snake_ent, direction: snake.direction})
+                    .with(Teleportable);
 
                 // spawnm new random fruit
 

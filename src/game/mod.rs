@@ -39,6 +39,7 @@ pub fn run() {
                 .add_startup_system(setup_system.system())
                 .add_system(scoreboard_system.system())
                 .add_system(fps_counter_system.system())
+                .add_system(border_teleport_system.system())
                 .add_system(direction_input_system.system())
                 .add_system(bump_snake_tail_system.system())
                 .add_system(snake_movement_system.system())

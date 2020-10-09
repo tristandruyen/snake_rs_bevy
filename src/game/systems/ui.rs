@@ -37,10 +37,8 @@ pub fn fps_counter_system(mut state: ResMut<DebugDiagnosticsState>,
 
                 for (mut text, _) in &mut query.iter() {
                     text.value =
-                        format!("Fps: {:?}", diagnostic.average().unwrap());
+                        format!("Fps: {:?}", diagnostic.value().unwrap());
                 }
-
-                println!("\nasdf{:?}", diagnostic.average());
             }
         }
     }
