@@ -17,8 +17,8 @@ pub struct DebugDiagnosticsPlugin {
 
 /// State used by the [DebugDiagnosticsPlugin]
 pub struct DebugDiagnosticsState {
-    timer:  Timer,
-    filter: Option<Vec<DiagnosticId>>,
+    pub timer:  Timer,
+    pub filter: Option<Vec<DiagnosticId>>,
 }
 
 impl Default for DebugDiagnosticsPlugin {
@@ -76,10 +76,12 @@ impl DebugDiagnosticsPlugin {
                 for diagnostic in
                     filter.iter().map(|id| diagnostics.get(*id).unwrap())
                 {
+                    println!("{:?}", diagnostic);
                     Self::debug_diagnostic(diagnostic);
                 }
             } else {
                 for diagnostic in diagnostics.iter() {
+                    // println!("{:?}", diagnostic);
                     Self::debug_diagnostic(diagnostic);
                 }
             }
