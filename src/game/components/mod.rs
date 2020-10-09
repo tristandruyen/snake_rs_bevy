@@ -22,3 +22,6 @@ pub enum PowerUp {
 pub struct Bumper {
     pub direction: Direction,
 }
+
+pub struct FpsText;
+pub struct ScoreText;

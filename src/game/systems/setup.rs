@@ -30,7 +30,28 @@ pub fn setup_system(mut commands: Commands,
             ..Default::default()
         },
         ..Default::default()
-    });
+    }).with(ScoreText{})
+    // fps counter
+    .spawn(TextComponents {
+        text: Text {
+            font: asset_server.load("assets/fonts/FiraSans-Bold.ttf").unwrap(),
+            value: "FPS:".to_string(),
+            style: TextStyle {
+                color: Color::rgb(0.2, 0.2, 0.8),
+                font_size: 40.0,
+            },
+        },
+        style: Style {
+            position_type: PositionType::Absolute,
+            position: Rect {
+                top: Val::Px(5.0),
+                left: Val::Px(500.0),
+                ..Default::default()
+            },
+            ..Default::default()
+        },
+        ..Default::default()
+    }).with(FpsText);
 
     let my_assets =
         MyAssets { fruit_color: materials.add(Color::rgb(0.8, 0.2, 0.2).into()),

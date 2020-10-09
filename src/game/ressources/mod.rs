@@ -6,6 +6,11 @@ pub struct MyAssets {
     pub tail_color:  Handle<ColorMaterial>,
     pub debug_color: Handle<ColorMaterial>,
 }
+
 pub struct Scoreboard {
     pub score: usize,
+}
+
+pub struct FpsCounter {
+    pub fps: usize,
 }
