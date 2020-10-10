@@ -13,7 +13,7 @@ pub fn tail_catch_system(mut _commands: Commands,
 
         for (mut snake_tail, mut transform) in &mut snake_tail_query.iter() {
             let snake_tail_pos: Vec4 = transform.value_mut().w_axis();
-            let catching_radius = 20.0;
+            let catching_radius = snake.catching_radius;
 
             if (snake_tail_pos.x() <= snake_pos.x()
                 && snake_tail_pos.x() >= snake_pos.x() - catching_radius / 2.0
