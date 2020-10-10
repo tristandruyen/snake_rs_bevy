@@ -44,5 +44,6 @@ pub fn run() {
                 .add_system(bump_snake_tail_system.system())
                 .add_system(snake_movement_system.system())
                 .add_system(eat_fruit_system.system())
+                .add_system(tail_catch_system.system())
                 .run();
 }
