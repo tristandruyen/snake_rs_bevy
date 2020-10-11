@@ -7,6 +7,10 @@ pub struct Snake {
     pub direction: Direction,
 }
 
+pub struct Catcher {
+    pub catching_radius: f32,
+}
+
 pub struct SnakeTail {
     pub next_elem: Entity,
     pub direction: Direction,

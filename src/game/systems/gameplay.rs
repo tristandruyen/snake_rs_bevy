@@ -4,16 +4,17 @@ use rand::Rng;
 
 use crate::game::{components::*, ressources::*};
 
-pub fn tail_catch_system(mut _commands: Commands,
-                         mut snake_query: Query<(&Snake, &mut Transform)>,
+pub fn tail_catch_system(mut snake_query: Query<(&Snake,
+                                &Transform,
+                                &Catcher)>,
                          mut snake_tail_query: Query<(&mut SnakeTail,
-                                &mut Transform)>) {
-    for (snake, mut transform) in &mut snake_query.iter() {
-        let snake_pos: Vec4 = transform.value_mut().w_axis();
+                                &Transform)>) {
+    for (snake, transform, catcher) in &mut snake_query.iter() {
+        let snake_pos: Vec4 = transform.value().w_axis();
 
-        for (mut snake_tail, mut transform) in &mut snake_tail_query.iter() {
-            let snake_tail_pos: Vec4 = transform.value_mut().w_axis();
-            let catching_radius = snake.catching_radius;
+        for (mut snake_tail, transform) in &mut snake_tail_query.iter() {
+            let snake_tail_pos: Vec4 = transform.value().w_axis();
+            let catching_radius = catcher.catching_radius;
 
             if (snake_tail_pos.x() <= snake_pos.x()
                 && snake_tail_pos.x() >= snake_pos.x() - catching_radius / 2.0
@@ -33,8 +34,7 @@ pub fn tail_catch_system(mut _commands: Commands,
     }
 }
 
-pub fn border_teleport_system(mut _commands: Commands,
-                              window_descriptor: Res<WindowDescriptor>,
+pub fn border_teleport_system(window_descriptor: Res<WindowDescriptor>,
                               mut query: Query<(&Teleportable,
                                      &mut Transform)>) {
     for (_, mut transform) in &mut query.iter() {
