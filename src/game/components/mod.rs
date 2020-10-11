@@ -2,8 +2,7 @@ use super::prelude::Direction;
 use bevy::prelude::Entity;
 
 pub struct Snake {
-    pub speed: f32,
-    pub catching_radius: f32,
+    pub speed:     f32,
     pub direction: Direction,
 }
 
