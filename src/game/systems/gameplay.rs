@@ -10,7 +10,7 @@ pub fn tail_catch_system(snake_query: Query<(&Snake, &Transform, &Catcher)>,
     for (snake, transform, catcher) in snake_query.iter() {
         let snake_pos: Vec4 = transform.compute_matrix().w_axis();
 
-        for (mut snake_tail, transform) in snake_tail_query.iter_mut() {
+        for (mut snake_tail, transform) in &mut snake_tail_query.iter_mut() {
             let snake_tail_pos: Vec4 = transform.compute_matrix().w_axis();
             let catching_radius = catcher.catching_radius;
 
@@ -122,8 +122,8 @@ pub fn snake_movement_system(time: Res<Time>,
 
     for (snake, mut transform) in snake_query.iter_mut() {
         transform.translation = transform.mul_vec3(snake.direction.to_vec3()
-                                                    * snake.speed
-                                                    * delta_seconds);
+                                                   * snake.speed
+                                                   * delta_seconds);
     }
 
     for (snake_tail, mut tail_transform) in snake_tail_query.iter_mut() {
