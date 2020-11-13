@@ -1,9 +1,11 @@
 #![allow(dead_code)]
 
 use bevy::{
+    audio::AudioPlugin,
     diagnostic::FrameTimeDiagnosticsPlugin,
     prelude::*,
     render::pass::ClearColor,
+    DefaultPlugins,
 };
 
 use bevy::window::WindowMode;
@@ -31,7 +33,9 @@ pub fn run() {
                                                  //mode: WindowMode::Fullscreen { use_size: true }
                                                  // mode: WindowMode::BorderlessFullscreen
                                                  ..Default::default() })
-                .add_default_plugins()
+                .add_plugins_with(DefaultPlugins, |group| {
+                    group.disable::<AudioPlugin>()
+                })
                 .add_plugin(FrameTimeDiagnosticsPlugin::default())
                 .add_plugin(DebugDiagnosticsPlugin::default())
                 .add_resource(Scoreboard { score: 0 })

@@ -14,7 +14,7 @@ use crate::plugins::debug_diagnostics_plugin::DebugDiagnosticsState;
 
 pub fn scoreboard_system(scoreboard: Res<Scoreboard>,
                          mut query: Query<(&mut Text, &ScoreText)>) {
-    for (mut text, _) in &mut query.iter() {
+    for (mut text, _) in query.iter_mut() {
         text.value = format!("Score: {}", scoreboard.score);
     }
 }
@@ -33,7 +33,7 @@ pub fn fps_counter_system(mut state: ResMut<DebugDiagnosticsState>,
                     continue;
                 }
 
-                for (mut text, _) in &mut query.iter() {
+                for (mut text, _) in query.iter_mut() {
                     text.value =
                         format!("Fps: {:?}", diagnostic.value().unwrap());
                 }
