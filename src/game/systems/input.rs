@@ -6,7 +6,7 @@ pub fn direction_input_system(mut commands: Commands,
                               my_assets: Res<MyAssets>,
                               keyboard_input: Res<Input<KeyCode>>,
                               mut query: Query<(&mut Snake, &Transform)>) {
-    for (mut snake, transform) in &mut query.iter() {
+    for (mut snake, transform) in query.iter_mut() {
         for input in keyboard_input.get_pressed() {
             if let Some(direction) = match &input {
                 KeyCode::Left => Some(Direction::Left),
@@ -20,7 +20,7 @@ pub fn direction_input_system(mut commands: Commands,
                     snake.direction = direction;
 
                     commands.spawn(SpriteComponents {
-                        material: my_assets.debug_color,
+                        material: my_assets.debug_color.clone(),
                         transform: *transform,
                         sprite: Sprite::new(Vec2::new(10.0, 10.0)),
                         ..Default::default()

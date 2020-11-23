@@ -1,5 +1,6 @@
 use bevy::prelude::*;
 
+// #[derive(Copy, Debug)]
 pub struct MyAssets {
     pub fruit_color: Handle<ColorMaterial>,
     pub snake_color: Handle<ColorMaterial>,

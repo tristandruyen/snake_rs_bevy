@@ -4,16 +4,14 @@ use rand::Rng;
 
 use crate::game::{components::*, ressources::*};
 
-pub fn tail_catch_system(mut snake_query: Query<(&Snake,
-                                &Transform,
-                                &Catcher)>,
+pub fn tail_catch_system(snake_query: Query<(&Snake, &Transform, &Catcher)>,
                          mut snake_tail_query: Query<(&mut SnakeTail,
                                 &Transform)>) {
-    for (snake, transform, catcher) in &mut snake_query.iter() {
-        let snake_pos: Vec4 = transform.value().w_axis();
+    for (snake, transform, catcher) in snake_query.iter() {
+        let snake_pos: Vec4 = transform.compute_matrix().w_axis();
 
-        for (mut snake_tail, transform) in &mut snake_tail_query.iter() {
-            let snake_tail_pos: Vec4 = transform.value().w_axis();
+        for (mut snake_tail, transform) in &mut snake_tail_query.iter_mut() {
+            let snake_tail_pos: Vec4 = transform.compute_matrix().w_axis();
             let catching_radius = catcher.catching_radius;
 
             if (snake_tail_pos.x() <= snake_pos.x()
@@ -37,28 +35,39 @@ pub fn tail_catch_system(mut snake_query: Query<(&Snake,
 pub fn border_teleport_system(window_descriptor: Res<WindowDescriptor>,
                               mut query: Query<(&Teleportable,
                                      &mut Transform)>) {
-    for (_, mut transform) in &mut query.iter() {
+    for (_, mut transform) in query.iter_mut() {
         let width = window_descriptor.width as i32;
         let height = window_descriptor.height as i32;
-        let pos: Vec4 = transform.value().w_axis();
+        let pos: Vec4 = transform.compute_matrix().w_axis();
 
         match pos.x() as i32 {
             x if (x > width / 2) => {
-                transform.value_mut().w_axis_mut().set_x((x - width) as f32)
+                transform.translation.set_x((x - width) as f32);
+                // transform.value_mut().w_axis_mut().set_x((x - width) as f32)
             }
             x if (x < -width / 2) => {
-                transform.value_mut().w_axis_mut().set_x((x + width) as f32)
+                transform.translation.set_x((x + width) as f32);
+                // transform.value_mut().w_axis_mut().set_x((x + width) as f32)
             }
             _ => (),
         }
 
         match pos.y() as i32 {
-            y if (y > height / 2) => transform.value_mut()
-                                              .w_axis_mut()
-                                              .set_y((y - height) as f32),
-            y if (y < -height / 2) => transform.value_mut()
-                                               .w_axis_mut()
-                                               .set_y((y + height) as f32),
+            y if (y > height / 2) => {
+                // transform.value_mut()
+                //          .w_axis_mut()
+                //          .set_y((y - height) as f32);
+
+                transform.translation.set_y((y - height) as f32)
+            }
+
+            y if (y < -height / 2) => {
+                // transform.value_mut()
+                //          .w_axis_mut()
+                //          .set_y((y + height) as f32)
+
+                transform.translation.set_y((y + height) as f32)
+            }
             _ => (),
         }
     }
@@ -66,7 +75,7 @@ pub fn border_teleport_system(window_descriptor: Res<WindowDescriptor>,
 
 pub fn bump_snake_tail_system(mut _commands: Commands,
 
-                              mut bumper_query: Query<(Entity,
+                              bumper_query: Query<(Entity,
                                      &Bumper,
                                      &Transform,
                                      &Sprite)>,
@@ -84,11 +93,11 @@ pub fn bump_snake_tail_system(mut _commands: Commands,
         for (_snake_tail_ent,
              mut snake_tail,
              snake_tail_transform,
-             snake_tail_sprite) in &mut snake_tail_query.iter()
+             snake_tail_sprite) in snake_tail_query.iter_mut()
         {
-            let collision = collide(bumper_transform.translation(),
+            let collision = collide(bumper_transform.translation,
                                     bumper_size,
-                                    snake_tail_transform.translation(),
+                                    snake_tail_transform.translation,
                                     snake_tail_sprite.size);
             if collision.is_some() {
                 snake_tail.direction = bumper.direction;
@@ -111,27 +120,28 @@ pub fn snake_movement_system(time: Res<Time>,
 
     let delta_seconds = f32::min(0.01, time.delta_seconds);
 
-    for (snake, mut transform) in &mut snake_query.iter() {
-        transform.translate(snake.direction.to_vec3()
-                            * snake.speed
-                            * delta_seconds);
+    for (snake, mut transform) in snake_query.iter_mut() {
+        transform.translation = transform.mul_vec3(snake.direction.to_vec3()
+                                                   * snake.speed
+                                                   * delta_seconds);
     }
 
-    for (snake_tail, mut tail_transform) in &mut snake_tail_query.iter() {
-        tail_transform.translate(snake_tail.direction.to_vec3()
-                                 * 400.0
-                                 * delta_seconds);
+    for (snake_tail, mut tail_transform) in snake_tail_query.iter_mut() {
+        tail_transform.translation =
+            tail_transform.mul_vec3(snake_tail.direction.to_vec3()
+                                    * 400.0
+                                    * delta_seconds);
     }
 }
 
 pub fn eat_fruit_system(mut commands: Commands,
                         mut scoreboard: ResMut<Scoreboard>,
                         my_assets: Res<MyAssets>,
-                        mut snake_query: Query<(Entity,
+                        snake_query: Query<(Entity,
                                &Snake,
                                &Transform,
                                &Sprite)>,
-                        mut fruit_query: Query<(Entity,
+                        fruit_query: Query<(Entity,
                                &Fruit,
                                &Transform,
                                &Sprite)>) {
@@ -143,9 +153,9 @@ pub fn eat_fruit_system(mut commands: Commands,
         for (fruit_entity, mut _fruit, fruit_transform, fruit_sprite) in
             &mut fruit_query.iter()
         {
-            let collision = collide(snake_transform.translation(),
+            let collision = collide(snake_transform.translation,
                                     snake_size,
-                                    fruit_transform.translation(),
+                                    fruit_transform.translation,
                                     fruit_sprite.size);
 
             if collision.is_some() {
@@ -155,14 +165,15 @@ pub fn eat_fruit_system(mut commands: Commands,
                 // spawn new snake tail
 
                 let mut part_transform = *snake_transform;
-                part_transform.translate(snake.direction.to_vec3()
-                                         * Vec3::new(-snake_size.x(),
-                                                     -snake_size.y(),
-                                                     0.0));
+                part_transform.translation =
+                    part_transform.mul_vec3(snake.direction.to_vec3()
+                                            * Vec3::new(-snake_size.x(),
+                                                        -snake_size.y(),
+                                                        0.0));
 
                 commands
                     .spawn(SpriteComponents {
-                        material: my_assets.tail_color,
+                        material: my_assets.tail_color.clone(),
                         transform:  part_transform,
                         sprite: Sprite::new(Vec2::new(10.0, 10.0)),
                         ..Default::default()
@@ -176,7 +187,7 @@ pub fn eat_fruit_system(mut commands: Commands,
 
                 commands
                     .spawn(SpriteComponents {
-                        material: my_assets.fruit_color,
+                        material: my_assets.fruit_color.clone(),
                         transform: Transform::from_translation(
                             Vec3::new(
                                 rng.gen_range(-250.0, 250.0),

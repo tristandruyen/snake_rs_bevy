@@ -13,7 +13,7 @@ pub fn setup_system(mut commands: Commands,
     // score
     .spawn(TextComponents {
         text: Text {
-            font: asset_server.load("assets/fonts/FiraSans-Bold.ttf").unwrap(),
+            font: asset_server.load("/home/tristand/code/snake_rs_bevy/assets/fonts/FiraSans-Bold.ttf"),
             value: "Score:".to_string(),
             style: TextStyle {
                 color: Color::rgb(0.2, 0.2, 0.8),
@@ -34,7 +34,7 @@ pub fn setup_system(mut commands: Commands,
     // fps counter
     .spawn(TextComponents {
         text: Text {
-            font: asset_server.load("assets/fonts/FiraSans-Bold.ttf").unwrap(),
+            font: asset_server.load("/home/tristand/code/snake_rs_bevy/assets/fonts/FiraSans-Bold.ttf"),
             value: "FPS:".to_string(),
             style: TextStyle {
                 color: Color::rgb(0.2, 0.2, 0.8),
@@ -62,7 +62,7 @@ pub fn setup_system(mut commands: Commands,
     // snake
     commands
         .spawn(SpriteComponents {
-            material: my_assets.snake_color,
+            material: my_assets.snake_color.clone(),
             transform: Transform::from_translation(Vec3::new(0.0, -50.0, 1.0)),
             sprite: Sprite::new(Vec2::new(15.0, 15.0)),
             ..Default::default()
@@ -74,7 +74,7 @@ pub fn setup_system(mut commands: Commands,
     // first fruit
     commands
         .spawn(SpriteComponents {
-            material: my_assets.fruit_color,
+            material: my_assets.fruit_color.clone(),
             transform: Transform::from_translation(Vec3::new(0.0, -50.0, 1.0)),
             sprite: Sprite::new(Vec2::new(10.0, 10.0)),
             ..Default::default()
